@@ -5,10 +5,14 @@ export const metadata = {
   description: 'Honest yaps that call out & celebrate our inner tryhards. A podcast about adulthood, ambition, identity, and the messy beauty of caring deeply and trying hard — with microphones. Hosted by Amanda & Monica from Singapore.',
   keywords: ['podcast', 'adulthood', 'ambition', 'identity', 'friendship', 'mental health', 'third culture kids', 'Singapore', 'millennials', 'trying hard', 'self-improvement'],
   authors: [{ name: 'Amanda & Monica' }],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Trying Very Hard: The Podcast',
     description: 'Honest yaps that call out & celebrate our inner tryhards.',
-    url: 'https://tryingveryhardpod.com',
+    url: 'https://tryingveryhard.com',
     siteName: 'Trying Very Hard',
     type: 'website',
     locale: 'en_SG',
