@@ -93,15 +93,15 @@ export default function TVH(){
   return(
     <div style={{width:"100%",height:"100vh",overflow:"auto",background:"#FFF0DD"}}>
       <style>{`
-        @font-face{font-family:'Coco Gothic';src:url('./coco-gothic_regular.ttf') format('truetype');font-weight:400;font-style:normal}
-        @font-face{font-family:'Coco Gothic';src:url('./coco-gothic_bold.ttf') format('truetype');font-weight:700;font-style:normal}
-        @font-face{font-family:'Coco Gothic';src:url('./coco-gothic_italic.ttf') format('truetype');font-weight:400;font-style:italic}
-        @font-face{font-family:'Coco Gothic';src:url('./coco-gothic_bold-italic.ttf') format('truetype');font-weight:700;font-style:italic}
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+        
+        
+        
+        
+        
         *{box-sizing:border-box;margin:0;padding:0}
         ::selection{background:#F5ACC8;color:#1a1a1a}
         .c{font-family:'Coco Gothic','Montserrat',sans-serif}
-        .cv{font-family:'Caveat',cursive}
+        
         .nl{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;padding:6px 0;cursor:pointer;background:none;border:none;font-family:'Coco Gothic',sans-serif;position:relative}
         .nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#F5ACC8;transition:width 0.3s}
         .nl:hover::after{width:100%}
@@ -162,9 +162,7 @@ export default function TVH(){
         <nav className="c" style={{padding:"14px clamp(24px,5vw,80px)"}}>
           <div style={{maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <div style={{cursor:"pointer"}} onClick={()=>go("home")}>
-              <div style={{padding:"5px 14px",background:"#1a1a1a",borderRadius:8,display:"inline-flex",alignItems:"center"}}>
-                <span className="cv" style={{color:"#F5ACC8",fontSize:20,fontWeight:700}}>VERY<span style={{color:"#FFD200",fontSize:12}}>{"\u2605"}</span></span>
-              </div>
+              <img src="/images/nav-logo.png" alt="Trying Very Hard" style={{height:36,borderRadius:8}}/>
             </div>
             <div className="desk" style={{display:"flex",gap:32}}>
               {NAV.map(s=>(<button key={s} className="nl" onClick={()=>go(s)}>{s}</button>))}
@@ -174,12 +172,12 @@ export default function TVH(){
         </nav>
         <div className="hero-split" style={{flex:1,display:"flex",minHeight:0,position:"relative"}}>
           <div className="hero-img" style={{flex:"0 0 52%",position:"relative",minHeight:"100%"}}>
-            <div style={{position:"absolute",inset:0,background:"url('./hero-banner.jpg') center top / cover no-repeat"}}/>
+            <div style={{position:"absolute",inset:0,background:"url('/images/hero-banner.jpg') center top / cover no-repeat"}}/>
             <div className="desk" style={{position:"absolute",top:0,right:0,bottom:0,width:"120px",background:"linear-gradient(to right, transparent, #FFF0DD)"}}/>
           </div>
           <div className="hero-text" style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",padding:"clamp(40px,5vh,80px) clamp(32px,4vw,64px)"}}>
-            <div className="fu" style={{display:"inline-block",padding:"12px 24px",background:"#1a1a1a",borderRadius:12,marginBottom:28,alignSelf:"flex-start"}}>
-              <span className="cv" style={{color:"#F5ACC8",fontSize:"clamp(38px,5vw,56px)",fontWeight:700,lineHeight:1}}>VERY<span style={{color:"#FFD200",fontSize:"clamp(22px,2.5vw,32px)"}}>{"\u2605"}</span></span>
+            <div className="fu" style={{marginBottom:28,alignSelf:"flex-start"}}>
+              <img src="/images/hero-logo.png" alt="Trying Very Hard" style={{height:"clamp(60px,8vw,90px)"}}/>
             </div>
             <h1 className="c fu fu1" style={{fontWeight:700,fontSize:"clamp(26px,3.5vw,44px)",lineHeight:1.15,textTransform:"uppercase",marginBottom:20,maxWidth:520}}>Honest yaps that call out & celebrate our inner tryhards.</h1>
             <p className="c fu fu2" style={{fontSize:"clamp(14px,1.5vw,17px)",lineHeight:1.7,color:"#666",maxWidth:460,marginBottom:32}}>Two best friends navigating adulthood, ambition, identity, and the messy beauty of caring deeply and trying hard — with microphones.</p>
@@ -335,8 +333,8 @@ export default function TVH(){
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div className="ft-cols" style={{display:"flex",justifyContent:"space-between",gap:48,marginBottom:40}}>
             <div style={{flex:"1 1 300px"}}>
-              <div style={{padding:"6px 16px",background:"rgba(255,255,255,0.08)",borderRadius:8,display:"inline-flex",alignItems:"center",marginBottom:12}}>
-                <span className="cv" style={{color:"#F5ACC8",fontSize:20,fontWeight:700}}>VERY<span style={{color:"#FFD200",fontSize:12}}>{"\u2605"}</span></span>
+              <div style={{marginBottom:12}}>
+                <img src="/images/nav-logo.png" alt="Trying Very Hard" style={{height:30,borderRadius:6}}/>
               </div>
               <p className="c" style={{fontSize:14,lineHeight:1.7,opacity:0.5,maxWidth:320}}>A podcast about the effort behind the outcome — and why that effort matters.</p>
             </div>
