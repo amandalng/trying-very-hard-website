@@ -58,13 +58,13 @@ export default function HomeClient({ episodes = [] }){
   const eps=episodes.slice(0,5);
   const NAV=["subscribe","episodes","blog","about","contact"];
 
-  // Episode card — 16:9 thumbnail (#3/#4 fix)
+  // Episode card — 16:9 thumbnail with YouTube image or colored placeholder
   const EpCard=({ep,isLatest})=>(
     <div className="ep-row" style={{background:"#fff",borderRadius:20,padding:"clamp(24px,3vw,36px)",display:"flex",gap:28,alignItems:"flex-start"}}>
-      <div className="ep-thumb" style={{flexShrink:0,width:"clamp(180px,24vw,320px)",aspectRatio:"16/9",borderRadius:16,overflow:"hidden",
-        background:ep.type==="guest"?"linear-gradient(135deg,#FFD200 0%,#ffe066 100%)":"linear-gradient(135deg,#F5ACC8 0%,#f8c8da 100%)",
+      <div className="ep-thumb" style={{flexShrink:0,width:"clamp(180px,24vw,320px)",aspectRatio:"16/9",borderRadius:16,overflow:"hidden",position:"relative",
+        background:ep.thumbnail?`url(${ep.thumbnail}) center/cover no-repeat`:(ep.type==="guest"?"linear-gradient(135deg,#FFD200 0%,#ffe066 100%)":"linear-gradient(135deg,#F5ACC8 0%,#f8c8da 100%)"),
         display:"flex",alignItems:"center",justifyContent:"center"}}>
-        <div style={{width:48,height:48,borderRadius:"50%",background:"#FFD200",display:"flex",alignItems:"center",justifyContent:"center"}}><PlayIcon/></div>
+        {!ep.thumbnail&&<div style={{width:48,height:48,borderRadius:"50%",background:"#FFD200",display:"flex",alignItems:"center",justifyContent:"center"}}><PlayIcon/></div>}
       </div>
       <div style={{flex:1,minWidth:0}}>
         <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10,flexWrap:"wrap"}}>
@@ -164,7 +164,7 @@ export default function HomeClient({ episodes = [] }){
         </nav>
         <div className="hero-split" style={{flex:1,display:"flex",minHeight:0,position:"relative"}}>
           <div className="hero-img" style={{flex:"0 0 52%",position:"relative",minHeight:"100%"}}>
-            <div style={{position:"absolute",inset:0,background:"url('/images/hero-banner.jpg') center 15% / cover no-repeat"}}/>
+            <div style={{position:"absolute",inset:0,background:"url('/images/hero-banner.jpg') center 5% / cover no-repeat"}}/>
             <div className="desk" style={{position:"absolute",top:0,right:0,bottom:0,width:"120px",background:"linear-gradient(to right, transparent, #FFF0DD)"}}/>
           </div>
           <div className="hero-text" style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",padding:"clamp(40px,5vh,80px) clamp(32px,4vw,64px)"}}>
@@ -281,7 +281,7 @@ export default function HomeClient({ episodes = [] }){
 
       {/* 6. CONTACT */}
       <section id="contact" style={{background:"#FFF0DD",padding:"clamp(72px,10vh,120px) clamp(24px,5vw,80px)"}}>
-        <div style={{maxWidth:900,margin:"0 auto"}}>
+        <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div className="csplit" style={{display:"flex",gap:"clamp(32px,4vw,64px)",flexWrap:"wrap",alignItems:"flex-start"}}>
             <div style={{flex:"1 1 280px"}}>
               <SectionLabel>Get In Touch</SectionLabel>
