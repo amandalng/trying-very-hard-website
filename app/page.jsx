@@ -34,14 +34,14 @@ const Pers=({s=52})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" s
 const MenuI=()=><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
 const CloseI=()=><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
 
-// Shared platform circle icons — used in episode cards, subscribe, mini-subscribe (#6 fix: consistent)
-const PlatformIcons=({size=36,iconSize=16,links})=>(
+// Shared platform circle icons — used in episode cards, subscribe, mini-subscribe
+const PlatformIcons=({size=36,iconSize=16,links,dark=false})=>(
   <div style={{display:"flex",gap:size>40?16:8,justifyContent:"center"}}>
     <a href={links.youtube||LK.youtube} target="_blank" rel="noopener noreferrer" style={{width:size,height:size,borderRadius:"50%",background:"#FF0000",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",textDecoration:"none",transition:"all 0.2s"}}
     onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)"}}><YT s={iconSize}/></a>
     <a href={links.spotify||LK.spotify} target="_blank" rel="noopener noreferrer" style={{width:size,height:size,borderRadius:"50%",background:"#1DB954",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",textDecoration:"none",transition:"all 0.2s"}}
     onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)"}}><SP s={iconSize}/></a>
-    <a href={links.apple||LK.apple} target="_blank" rel="noopener noreferrer" style={{width:size,height:size,borderRadius:"50%",background:"#1a1a1a",display:"flex",alignItems:"center",justifyContent:"center",color:"#FFF0DD",textDecoration:"none",transition:"all 0.2s"}}
+    <a href={links.apple||LK.apple} target="_blank" rel="noopener noreferrer" style={{width:size,height:size,borderRadius:"50%",background:dark?"#fff":"#1a1a1a",display:"flex",alignItems:"center",justifyContent:"center",color:dark?"#1a1a1a":"#FFF0DD",textDecoration:"none",transition:"all 0.2s"}}
     onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)"}}><AP s={iconSize}/></a>
   </div>
 );
@@ -59,10 +59,10 @@ const SocialIcon=({href,children})=>(
 
 export default function TVH(){
   const [menuOpen,setMenuOpen]=useState(false);
-  const [form,setForm]=useState({name:"",email:"",type:"general",message:""});
+  const [form,setForm]=useState({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""});
   const [sent,setSent]=useState(false);
   const go=(id)=>{setMenuOpen(false);document.getElementById(id)?.scrollIntoView({behavior:"smooth"})};
-  const sub=(e)=>{e.preventDefault();setSent(true);setTimeout(()=>setSent(false),4000);setForm({name:"",email:"",type:"general",message:""})};
+  const sub=(e)=>{e.preventDefault();setSent(true);setTimeout(()=>setSent(false),4000);setForm({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""})};
   const eps=EPISODES.slice(0,5);
   const NAV=["subscribe","episodes","blog","about","contact"];
 
@@ -100,19 +100,19 @@ export default function TVH(){
         
         *{box-sizing:border-box;margin:0;padding:0}
         ::selection{background:#F5ACC8;color:#1a1a1a}
-        .c{font-family:'Coco Gothic','Montserrat',sans-serif}
+        .c{font-family:'Montserrat',sans-serif}
         
-        .nl{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;padding:6px 0;cursor:pointer;background:none;border:none;font-family:'Coco Gothic',sans-serif;position:relative}
+        .nl{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;padding:6px 0;cursor:pointer;background:none;border:none;font-family:'Montserrat',sans-serif;position:relative}
         .nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#F5ACC8;transition:width 0.3s}
         .nl:hover::after{width:100%}
-        .cap{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:40px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;text-decoration:none;cursor:pointer;transition:all 0.25s ease;border:none;font-family:'Coco Gothic',sans-serif}
+        .cap{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:40px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;text-decoration:none;cursor:pointer;transition:all 0.25s ease;border:none;font-family:'Montserrat',sans-serif}
         .cap:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.12)}
         .cap-y{background:#FFD200;color:#1a1a1a}.cap-y:hover{background:#f0c600}
         .cap-b{background:#1a1a1a;color:#FFF0DD}.cap-b:hover{background:#333}
         .cap-w{background:#fff;color:#1a1a1a}.cap-w:hover{background:#f5f5f5}
         .cap-sm{padding:8px 18px;font-size:12px}
         .tag-latest{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:#1a1a1a;color:#FFF0DD}
-        .ff{width:100%;padding:16px 20px;border:3px solid rgba(0,0,0,0.06);border-radius:14px;font-size:15px;font-family:'Coco Gothic',sans-serif;background:#fff;transition:border-color 0.2s;color:#1a1a1a}
+        .ff{width:100%;padding:16px 20px;border:3px solid rgba(0,0,0,0.06);border-radius:14px;font-size:15px;font-family:'Montserrat',sans-serif;background:#fff;transition:border-color 0.2s;color:#1a1a1a}
         .ff:focus{outline:none;border-color:#F5ACC8}
         .ff::placeholder{color:#aaa}
         .mob-ov{position:fixed;inset:0;z-index:1000;background:#FFF0DD;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px}
@@ -172,13 +172,10 @@ export default function TVH(){
         </nav>
         <div className="hero-split" style={{flex:1,display:"flex",minHeight:0,position:"relative"}}>
           <div className="hero-img" style={{flex:"0 0 52%",position:"relative",minHeight:"100%"}}>
-            <div style={{position:"absolute",inset:0,background:"url('/images/hero-banner.jpg') center top / cover no-repeat"}}/>
+            <div style={{position:"absolute",inset:0,background:"url('/images/hero-banner.jpg') center 15% / cover no-repeat"}}/>
             <div className="desk" style={{position:"absolute",top:0,right:0,bottom:0,width:"120px",background:"linear-gradient(to right, transparent, #FFF0DD)"}}/>
           </div>
           <div className="hero-text" style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",padding:"clamp(40px,5vh,80px) clamp(32px,4vw,64px)"}}>
-            <div className="fu" style={{marginBottom:28,alignSelf:"flex-start"}}>
-              <img src="/images/hero-logo.png" alt="Trying Very Hard" style={{height:"clamp(60px,8vw,90px)"}}/>
-            </div>
             <h1 className="c fu fu1" style={{fontWeight:700,fontSize:"clamp(26px,3.5vw,44px)",lineHeight:1.15,textTransform:"uppercase",marginBottom:20,maxWidth:520}}>Honest yaps that call out & celebrate our inner tryhards.</h1>
             <p className="c fu fu2" style={{fontSize:"clamp(14px,1.5vw,17px)",lineHeight:1.7,color:"#666",maxWidth:460,marginBottom:32}}>Two best friends navigating adulthood, ambition, identity, and the messy beauty of caring deeply and trying hard — with microphones.</p>
             <div className="hero-btns fu fu3" style={{display:"flex",gap:14,flexWrap:"wrap"}}>
@@ -198,7 +195,7 @@ export default function TVH(){
           <p className="c" style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",color:"#F5ACC8",marginBottom:6}}>Listen & Follow</p>
           <h2 className="c" style={{fontWeight:700,fontSize:"clamp(24px,3.5vw,40px)",textTransform:"uppercase",marginBottom:12,color:"#FFF0DD"}}>Subscribe Now on Your Favorite Platform</h2>
           <p className="c" style={{fontSize:14,color:"rgba(255,240,221,0.5)",marginBottom:36}}>Never miss an episode. New conversations every Tuesday.</p>
-          <PlatformIcons size={56} iconSize={24} links={LK}/>
+          <PlatformIcons size={56} iconSize={24} links={LK} dark={true}/>
         </div>
       </section>
 
@@ -210,7 +207,7 @@ export default function TVH(){
               <SectionLabel>Latest Episodes</SectionLabel>
               <h2 className="c" style={{fontWeight:700,fontSize:"clamp(28px,4vw,44px)",lineHeight:1.1,textTransform:"uppercase"}}>Come Sit With Us</h2>
             </div>
-            <a href={LK.youtube} target="_blank" rel="noopener noreferrer" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Episodes <Arr/></a>
+            <a href="/episodes" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Episodes <Arr/></a>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             {eps.map((ep,i)=>(<EpCard key={ep.id} ep={ep} isLatest={i===0}/>))}
@@ -222,7 +219,7 @@ export default function TVH(){
       <section style={{background:"#1a1a1a",padding:"clamp(40px,5vh,56px) clamp(24px,5vw,80px)"}}>
         <div style={{maxWidth:700,margin:"0 auto",textAlign:"center"}}>
           <p className="c" style={{fontSize:"clamp(18px,2.5vw,26px)",fontWeight:700,textTransform:"uppercase",color:"#FFF0DD",marginBottom:20}}>Like what you hear?</p>
-          <PlatformIcons size={44} iconSize={20} links={LK}/>
+          <PlatformIcons size={44} iconSize={20} links={LK} dark={true}/>
           <p className="c" style={{fontSize:13,color:"rgba(255,240,221,0.4)",marginTop:14}}>Follow us wherever you listen.</p>
         </div>
       </section>
@@ -235,11 +232,11 @@ export default function TVH(){
               <SectionLabel>The TVH Journal</SectionLabel>
               <h2 className="c" style={{fontWeight:700,fontSize:"clamp(28px,4vw,44px)",lineHeight:1.1,textTransform:"uppercase"}}>Episode Recaps & Reflections</h2>
             </div>
-            <a href="#blog" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Posts <Arr/></a>
+            <a href="/blog" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Posts <Arr/></a>
           </div>
           <div className="blog-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20}}>
             {eps.slice(0,3).map(ep=>(
-              <a key={ep.id} href={`#blog-${ep.id}`} style={{textDecoration:"none",color:"inherit",display:"block"}}>
+              <a key={ep.id} href={`/blog/${ep.title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/-$/,"")}`} style={{textDecoration:"none",color:"inherit",display:"block"}}>
                 <div style={{background:"#fff",borderRadius:20,overflow:"hidden",transition:"all 0.3s"}}
                   onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 40px rgba(0,0,0,0.06)"}}
                   onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>
@@ -307,19 +304,52 @@ export default function TVH(){
                   <p className="c" style={{fontSize:14,color:"#888",marginTop:8}}>We'll get back to you soon!</p>
                 </div>
               ):(
-                <form onSubmit={sub} style={{background:"#fff",borderRadius:20,padding:"clamp(24px,3vw,36px)",display:"flex",flexDirection:"column",gap:14}}>
+                <form onSubmit={sub} style={{background:"#fff",borderRadius:20,padding:"clamp(24px,3vw,36px)",display:"flex",flexDirection:"column",gap:18}}>
                   <div className="frow" style={{display:"flex",gap:14}}>
-                    <input className="ff c" placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/>
-                    <input className="ff c" type="email" placeholder="Your email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} required/>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>First Name <span style={{color:"#F5ACC8"}}>*</span></label>
+                      <input className="ff c" value={form.firstName} onChange={e=>setForm({...form,firstName:e.target.value})} required/>
+                    </div>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Last Name <span style={{color:"#F5ACC8"}}>*</span></label>
+                      <input className="ff c" value={form.lastName} onChange={e=>setForm({...form,lastName:e.target.value})} required/>
+                    </div>
                   </div>
-                  <select className="ff c" value={form.type} onChange={e=>setForm({...form,type:e.target.value})} style={{color:form.type==="general"?"#aaa":"#1a1a1a"}}>
-                    <option value="general">What's this about?</option>
-                    <option value="sponsor">Sponsorship inquiry</option>
-                    <option value="collab">Collaboration / Guest pitch</option>
-                    <option value="topic">Topic suggestion</option>
-                    <option value="feedback">Feedback / Just saying hi</option>
-                  </select>
-                  <textarea className="ff c" rows={4} placeholder="Tell us more..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})} required style={{resize:"vertical"}}/>
+                  <div className="frow" style={{display:"flex",gap:14}}>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Email <span style={{color:"#F5ACC8"}}>*</span></label>
+                      <input className="ff c" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} required/>
+                    </div>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Phone Number</label>
+                      <input className="ff c" type="tel" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
+                    </div>
+                  </div>
+                  <div className="frow" style={{display:"flex",gap:14}}>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Company / Brand</label>
+                      <input className="ff c" value={form.company} onChange={e=>setForm({...form,company:e.target.value})}/>
+                    </div>
+                    <div style={{flex:1}}>
+                      <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Website / Social / Relevant Link</label>
+                      <input className="ff c" type="url" value={form.website} onChange={e=>setForm({...form,website:e.target.value})}/>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>What would you like to connect about? <span style={{color:"#F5ACC8"}}>*</span></label>
+                    <select className="ff c" value={form.type} onChange={e=>setForm({...form,type:e.target.value})} required style={{color:form.type===""?"#aaa":"#1a1a1a"}}>
+                      <option value="" disabled>Select one</option>
+                      <option value="guest">I'd love to be a guest (or suggest someone!)</option>
+                      <option value="sponsor">Sponsorship or brand partnership</option>
+                      <option value="collab">Collaboration idea</option>
+                      <option value="media">Media or press inquiry</option>
+                      <option value="other">Something else / just saying hi 👋</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="c" style={{fontSize:12,fontWeight:700,display:"block",marginBottom:6}}>Tell us more</label>
+                    <textarea className="ff c" rows={4} placeholder="Share any details, links, or what you're hoping for." value={form.message} onChange={e=>setForm({...form,message:e.target.value})} style={{resize:"vertical"}}/>
+                  </div>
                   <button type="submit" className="cap cap-b" style={{alignSelf:"flex-start"}}>Send Message <Arr/></button>
                 </form>
               )}
@@ -342,7 +372,7 @@ export default function TVH(){
               <p className="c" style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",opacity:0.3,marginBottom:12}}>Navigate</p>
               <div style={{display:"flex",flexDirection:"column",gap:8}}>
                 {NAV.map(s=>(
-                  <button key={s} className="c" onClick={()=>go(s)} style={{background:"none",border:"none",cursor:"pointer",color:"#FFF0DD",opacity:0.6,fontSize:14,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",textAlign:"left",padding:0,fontFamily:"'Coco Gothic',sans-serif",transition:"opacity 0.2s"}}
+                  <button key={s} className="c" onClick={()=>go(s)} style={{background:"none",border:"none",cursor:"pointer",color:"#FFF0DD",opacity:0.6,fontSize:14,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",textAlign:"left",padding:0,fontFamily:"'Montserrat',sans-serif",transition:"opacity 0.2s"}}
                   onMouseEnter={e=>e.currentTarget.style.opacity="1"} onMouseLeave={e=>e.currentTarget.style.opacity="0.6"}>{s}</button>
                 ))}
               </div>
@@ -368,9 +398,8 @@ export default function TVH(){
               </div>
             </div>
           </div>
-          <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:24,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:24,display:"flex",justifyContent:"center",alignItems:"center"}}>
             <p className="c" style={{fontSize:12,opacity:0.3}}>&copy; {new Date().getFullYear()} Amanda & Monica. All rights reserved.</p>
-            <p className="c" style={{fontSize:12,opacity:0.3}}>New episode drops every Tuesday</p>
           </div>
         </div>
       </footer>
