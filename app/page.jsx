@@ -334,7 +334,7 @@ export default function TVH(){
           <div className="ft-cols" style={{display:"flex",justifyContent:"space-between",gap:48,marginBottom:40}}>
             <div style={{flex:"1 1 300px"}}>
               <div style={{marginBottom:12}}>
-                <img src="/images/nav-logo.png" alt="Trying Very Hard" style={{height:30,borderRadius:6}}/>
+                <img src="/images/footer-logo.png" alt="Trying Very Hard" style={{height:48}}/>
               </div>
               <p className="c" style={{fontSize:14,lineHeight:1.7,opacity:0.5,maxWidth:320}}>A podcast about the effort behind the outcome — and why that effort matters.</p>
             </div>
