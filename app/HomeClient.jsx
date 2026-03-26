@@ -1,8 +1,8 @@
 "use client";
 import { useState, useRef } from "react";
 
-const AMANDA_HEADSHOT = null;
-const MONICA_HEADSHOT = null;
+const AMANDA_HEADSHOT = "/images/amanda-headshot.jpg";
+const MONICA_HEADSHOT = "/images/monica-headshot.jpg";
 
 
 const LK = { youtube:"https://www.youtube.com/@TryingVeryHardPod", spotify:"https://open.spotify.com/show/4kQL0nJmPhv38D8io58eMX", apple:"https://podcasts.apple.com/sg/podcast/trying-very-hard-the-podcast/id1878052269", instagram:"https://www.instagram.com/tryingveryhardpod/", tiktok:"https://www.tiktok.com/@tryingveryhardpod" };
@@ -120,12 +120,14 @@ export default function HomeClient({ episodes = [] }){
           .hero-text p{max-width:100%!important}
           .hero-text>div:first-child{align-self:center!important}
           .hero-btns{justify-content:center!important}
-          .ep-row{flex-direction:column!important;padding:20px!important;gap:20px!important}
+          .ep-row{flex-direction:column!important;padding:16px!important;gap:16px!important;overflow:hidden!important}
           .ep-thumb{width:100%!important}
-          .ep-row h3{font-size:17px!important}
-          .ep-row p{font-size:14px!important}
+          .ep-row h3{font-size:16px!important;word-wrap:break-word!important;overflow-wrap:break-word!important}
+          .ep-row p{font-size:13px!important;word-wrap:break-word!important;overflow-wrap:break-word!important}
           .ep-bottom{flex-direction:column!important;align-items:flex-start!important;gap:12px!important}
-          .blog-grid{grid-template-columns:1fr!important}
+          .blog-grid{grid-template-columns:1fr!important;padding:0!important}
+          .blog-grid>a{margin:0!important}
+          .blog-grid>a>div{margin:0 0!important}
           .hg{grid-template-columns:1fr!important}
           .frow{flex-direction:column!important}
           .ftin{flex-direction:column!important;gap:32px!important;text-align:center!important;align-items:center!important}
@@ -239,7 +241,7 @@ export default function HomeClient({ episodes = [] }){
                       <span className="c" style={{fontSize:11,color:"#bbb",fontWeight:700,marginLeft:"auto"}}>{ep.date}</span>
                     </div>
                     <h3 className="c" style={{fontWeight:700,fontSize:17,lineHeight:1.4,marginBottom:10}}>{ep.blogTitle}</h3>
-                    <p className="c" style={{fontSize:13,lineHeight:1.55,color:"#888",display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{ep.description}</p>
+                    <p className="c" style={{fontSize:13,lineHeight:1.55,color:"#888",display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden",wordWrap:"break-word",overflowWrap:"break-word"}}>{ep.description}</p>
                     <p className="c" style={{fontSize:12,fontWeight:700,color:"#F5ACC8",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:16,display:"flex",alignItems:"center",gap:6}}>Read More <Arr/></p>
                   </div>
                 </div>
