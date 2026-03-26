@@ -54,7 +54,7 @@ export default function HomeClient({ episodes = [] }){
   const [form,setForm]=useState({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""});
   const [sent,setSent]=useState(false);
   const go=(id)=>{setMenuOpen(false);document.getElementById(id)?.scrollIntoView({behavior:"smooth"})};
-  const sub=(e)=>{e.preventDefault();setSent(true);setTimeout(()=>setSent(false),4000);setForm({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""})};
+  const sub=async(e)=>{e.preventDefault();try{await fetch("https://formspree.io/f/xeepqpvr",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(form)});setSent(true);setTimeout(()=>setSent(false),4000);setForm({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""});}catch(err){alert("Something went wrong. Please try again!")}};
   const eps=episodes.slice(0,5);
   const NAV=["subscribe","episodes","blog","about","contact"];
 
