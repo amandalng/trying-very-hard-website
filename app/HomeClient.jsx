@@ -4,14 +4,6 @@ import { useState, useRef } from "react";
 const AMANDA_HEADSHOT = null;
 const MONICA_HEADSHOT = null;
 
-const EPISODES = [
-  { id:6, title:"You Don't Have to Be Broken to Go to Therapy: On Mental Health, Stigma, and What We've Learned", blogTitle:"Why Going to Therapy Still Feels So Hard (Even When You Know You Need It)", date:"Mar 24, 2026", duration:"40 min", type:"monanda", guest:null, description:"Why is it so hard to fully show up in therapy, even when you know you need it? We get into mental health stigma, Asian family dynamics, finding the right therapist, and the quiet self-sabotage of performing wellness.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/you-dont-have-to-be-broken-to-go-to-therapy-on-mental/id1878052269?i=1000756871967" },
-  { id:5, title:"If You Care for Me: One Banker's Journey from Shower Singer to Releasing Original Music", blogTitle:"What Happens When You Finally Take Your Creative Side Seriously", date:"Mar 16, 2026", duration:"46 min", type:"guest", guest:"Kelvin Kuan", description:"What happens when you've spent your whole life being 'the practical one,' and then music starts demanding more of you? Asian family expectations, the fear of self-promotion, and taking creative passion seriously later in life.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/if-you-care-for-me-one-bankers-journey-from-shower/id1878052269?i=1000755662503" },
-  { id:4, title:"Friendship After 30: Why It's Harder, Why It's Better, and How to Actually Keep It", blogTitle:"Why Your Friendships Change in Your 30s (and What to Do About It)", date:"Mar 9, 2026", duration:"47 min", type:"monanda", guest:null, description:"Friendships in your 30s require actual, deliberate effort. The shift from convenient to intentional friendships, how milestones reshape closeness, and why directness takes years.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/friendship-after-30-why-its-harder-why-its-better-and/id1878052269?i=1000754115606" },
-  { id:3, title:"BookTok Brain: Are Reading Challenges Ruining Reading?", blogTitle:"Are Reading Challenges Actually Ruining the Joy of Reading?", date:"Mar 2, 2026", duration:"58 min", type:"guest", guest:"Raissa Smarasista", description:"She read 84 books in a year — then realized she was doing it wrong. Hobby burnout, performative reading, Goodreads goals, and the BookTok effect.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/booktok-brain-are-reading-challenges-ruining-reading/id1878052269?i=1000752775306" },
-  { id:2, title:"This Was Supposed to Feel Better: On Inherited Ambition, Quarter-Life Doubt, and Redefining Success", blogTitle:"Why Career Success Feels Empty (and How to Redefine What Matters)", date:"Feb 23, 2026", duration:"39 min", type:"monanda", guest:null, description:"Why does career success sometimes feel underwhelming? Quarter-life doubt, inherited ambition, and the quiet identity crisis of your 20s and 30s.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/this-was-supposed-to-feel-better-on-inherited-ambition/id1878052269?i=1000751091535" },
-  { id:1, title:"Introducing Trying Very Hard: Why We Started a Podcast in Our 30s", blogTitle:"Why We Started a Podcast About Trying Hard in Our 30s", date:"Feb 17, 2026", duration:"38 min", type:"monanda", guest:null, description:"Welcome to Trying Very Hard! Who we are, the stories that shaped us, and why we started this podcast now.", youtube:"#", spotify:"#", apple:"https://podcasts.apple.com/sg/podcast/introducing-trying-very-hard-why-we-started-a/id1878052269?i=1000750268992" },
-];
 
 const LK = { youtube:"https://www.youtube.com/@TryingVeryHardPod", spotify:"https://open.spotify.com/show/4kQL0nJmPhv38D8io58eMX", apple:"https://podcasts.apple.com/sg/podcast/trying-very-hard-the-podcast/id1878052269", instagram:"https://www.instagram.com/tryingveryhardpod/", tiktok:"https://www.tiktok.com/@tryingveryhardpod" };
 
@@ -57,13 +49,13 @@ const SocialIcon=({href,children})=>(
   onMouseEnter={e=>{e.currentTarget.style.background="rgba(0,0,0,0.1)"}} onMouseLeave={e=>{e.currentTarget.style.background="rgba(0,0,0,0.04)"}}>{children}</a>
 );
 
-export default function TVH(){
+export default function HomeClient({ episodes = [] }){
   const [menuOpen,setMenuOpen]=useState(false);
   const [form,setForm]=useState({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""});
   const [sent,setSent]=useState(false);
   const go=(id)=>{setMenuOpen(false);document.getElementById(id)?.scrollIntoView({behavior:"smooth"})};
   const sub=(e)=>{e.preventDefault();setSent(true);setTimeout(()=>setSent(false),4000);setForm({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""})};
-  const eps=EPISODES.slice(0,5);
+  const eps=episodes.slice(0,5);
   const NAV=["subscribe","episodes","blog","about","contact"];
 
   // Episode card — 16:9 thumbnail (#3/#4 fix)
