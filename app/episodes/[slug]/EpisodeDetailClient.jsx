@@ -24,29 +24,116 @@ const SectionLabel=({children})=>(
   <p className="c" style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",color:"#F5ACC8",marginBottom:6}}>{children}</p>
 );
 
-// Generate tags from episode description keywords
+// Generate tags from episode title + description — comprehensive keyword matching
 function generateTags(episode) {
-  if (episode.tags) return episode.tags;
-  const keywords = ["mental health","therapy","stigma","friendship","ambition","success","career","identity","reading","BookTok","hobbies","music","creativity","vulnerability","adulthood","burnout","Asian","self-care","productivity"];
+  if (episode.tags && episode.tags.length > 0) return episode.tags;
   const combined = ((episode.title||"")+" "+(episode.description||"")).toLowerCase();
-  return keywords.filter(k => combined.includes(k.toLowerCase()));
-}
-
-// Generate discussed topics from description
-function generateTopics(episode) {
-  if (episode.discussedTopics) return episode.discussedTopics;
-  return (episode.description||"").split(/[.!?]+/).filter(s=>s.trim().length>15).slice(0,6).map(s=>s.trim());
-}
-
-// Extract Spotify episode ID for episode-specific embed
-function getSpotifyEmbedUrl(episode) {
-  // If the episode has a specific Spotify link with episode ID, use it
-  if (episode.spotify && episode.spotify.includes("/episode/")) {
-    const match = episode.spotify.match(/\/episode\/([a-zA-Z0-9]+)/);
-    if (match) return `https://open.spotify.com/embed/episode/${match[1]}?utm_source=generator&theme=0`;
+  
+  // Comprehensive tag dictionary — maps search terms to display tags
+  const tagMap = {
+    "mental health":["mental health"],"therapy":["therapy"],"stigma":["stigma"],"therapist":["therapy"],
+    "wellness":["wellness"],"self-care":["self-care"],"self-sabotage":["self-sabotage"],"anxiety":["anxiety"],
+    "friendship":["friendship"],"relationships":["relationships"],"friends":["friendship"],
+    "ambition":["ambition"],"success":["success"],"career":["career"],"job":["career"],"work":["career"],
+    "quarter-life":["quarter-life crisis"],"identity":["identity"],"who you are":["identity"],
+    "reading":["reading"],"booktok":["BookTok"],"books":["books"],"goodreads":["Goodreads"],
+    "hobbies":["hobbies"],"hobby":["hobbies"],"productive":["productivity culture"],"productivity":["productivity culture"],
+    "music":["music"],"creative":["creativity"],"passion":["passion"],"art":["creativity"],
+    "vulnerability":["vulnerability"],"vulnerable":["vulnerability"],"courage":["courage"],
+    "adulthood":["adulthood"],"growing up":["growing up"],"adulting":["adulting"],"30s":["your 30s"],
+    "burnout":["burnout"],"exhausted":["burnout"],"overwhelm":["burnout"],
+    "asian":["Asian families"],"family expectations":["family expectations"],"immigrant":["immigrant experience"],
+    "third culture":["third culture kids"],"tck":["third culture kids"],"expat":["expat life"],
+    "singapore":["Singapore"],"southeast asia":["Southeast Asia"],
+    "comparison":["comparison"],"imposter":["imposter syndrome"],"perfecti":["perfectionism"],
+    "self-promotion":["self-promotion"],"fear":["fear"],"doubt":["self-doubt"],
+    "effort":["effort"],"trying hard":["trying hard"],"tryhard":["trying hard"],
+    "milestone":["milestones"],"milestone":["milestones"],"wedding":["milestones"],"marriage":["milestones"],
+    "healing":["healing"],"boundaries":["boundaries"],"people-pleas":["people-pleasing"],
+    "introvert":["introversion"],"introspec":["introspection"],
+    "podcast":["podcasting"],"content":["content creation"],
+  };
+  
+  const tags = new Set();
+  for (const [search, display] of Object.entries(tagMap)) {
+    if (combined.includes(search)) {
+      display.forEach(t => tags.add(t));
+    }
   }
-  // Fallback to show-level embed
-  return `https://open.spotify.com/embed/show/4kQL0nJmPhv38D8io58eMX?utm_source=generator&theme=0`;
+  
+  // Also add guest name as a tag for guest episodes
+  if (episode.type === "guest" && episode.guest) {
+    tags.add(episode.guest);
+  }
+  
+  return [...tags].slice(0, 8); // Cap at 8 tags
+}
+
+// Generate discussed topics from title + description — creates meaningful bullet points
+function generateTopics(episode) {
+  if (episode.discussedTopics && episode.discussedTopics.length > 0) return episode.discussedTopics;
+  
+  const title = episode.title || "";
+  const desc = episode.description || "";
+  const combined = (title + " " + desc).toLowerCase();
+  const isGuest = episode.type === "guest";
+  const topics = [];
+
+  // Topic patterns — if the description/title contains these phrases, generate a topic
+  const patterns = [
+    { match: /mental health|therapy|therapist/i, topic: "Navigating mental health — what therapy is and isn't" },
+    { match: /stigma/i, topic: "The stigma around asking for help" },
+    { match: /asian|family expectation|family dynamic/i, topic: "Asian family dynamics and cultural expectations" },
+    { match: /self-sabotage|performing wellness/i, topic: "The quiet self-sabotage of performing wellness" },
+    { match: /right therapist|finding.*therapist/i, topic: "What to look for when finding the right therapist" },
+    { match: /broken|ready/i, topic: "Why you don't have to be 'broken' to start" },
+    { match: /friendship.*30|adult.*friend/i, topic: "Why friendships get harder (and more meaningful) in your 30s" },
+    { match: /intentional|deliberate.*effort/i, topic: "The shift from convenience-based to intentional friendships" },
+    { match: /milestone|reshape|marriage|kids/i, topic: "How life milestones reshape your closest relationships" },
+    { match: /directness|honest/i, topic: "Why directness in friendships takes years to build" },
+    { match: /fading|slow fade|drift/i, topic: "Navigating the slow fade — friendships that end without a fight" },
+    { match: /ambition|inherited.*ambition/i, topic: "Inherited ambition — whose definition of success are you chasing?" },
+    { match: /quarter-life|identity crisis/i, topic: "The quiet identity crisis of your 20s and 30s" },
+    { match: /career.*success|underwhelm/i, topic: "Why career success sometimes feels underwhelming" },
+    { match: /redefin.*success/i, topic: "Redefining what success actually means to you" },
+    { match: /booktok|reading challenge/i, topic: "BookTok and the pressure to turn reading into a performance" },
+    { match: /goodreads|84 books|tracking/i, topic: "The Goodreads goal spiral and reading for numbers" },
+    { match: /hobby.*burnout|hobbies.*productive/i, topic: "When hobbies stop being fun and start feeling like work" },
+    { match: /performative/i, topic: "Performative consumption vs. genuine enjoyment" },
+    { match: /music|singer|song/i, topic: "Taking your creative passion seriously — even when it's scary" },
+    { match: /banker|practical one|double life/i, topic: "Living a double life between your career and your passion" },
+    { match: /self-promotion|judged|colleagues/i, topic: "The fear of being seen and judged for caring about something" },
+    { match: /creative.*courage|vulnerability/i, topic: "Creative courage and the vulnerability of putting yourself out there" },
+    { match: /podcast.*start|why we started/i, topic: "Why we felt compelled to start this now, in our 30s" },
+    { match: /tryhard|effort.*matter/i, topic: "Reclaiming 'tryhard' — why visible effort is brave" },
+    { match: /who we are|shaped us/i, topic: "The stories that shaped who we are" },
+    { match: /comparison|social media/i, topic: "Comparison culture and the pressure to keep up" },
+    { match: /hustle culture|grind/i, topic: "Hustle culture and what we lose when everything is optimized" },
+  ];
+
+  for (const { match, topic } of patterns) {
+    if (match.test(combined)) {
+      topics.push(topic);
+    }
+  }
+  
+  // If guest episode, add a topic about the guest
+  if (isGuest && episode.guest && topics.length > 0) {
+    topics.unshift(`Getting real with ${episode.guest}`);
+  }
+  
+  // Fallback: if we got very few topics, generate from description sentences
+  if (topics.length < 3) {
+    const sentences = desc.split(/[,;.!?]+/).filter(s => s.trim().length > 20);
+    for (const s of sentences) {
+      const cleaned = s.trim().charAt(0).toUpperCase() + s.trim().slice(1);
+      if (!topics.includes(cleaned) && topics.length < 6) {
+        topics.push(cleaned);
+      }
+    }
+  }
+
+  return topics.slice(0, 6); // Cap at 6 topics
 }
 
 export default function EpisodeDetailClient({ episode, episodes = [] }) {
@@ -91,13 +178,6 @@ export default function EpisodeDetailClient({ episode, episodes = [] }) {
 
         {/* Platform buttons */}
         <PlatformIcons size={44} iconSize={20} links={{youtube:episode.youtube,spotify:episode.spotify,apple:episode.apple}}/>
-      </div>
-
-      {/* Spotify player */}
-      <div style={{maxWidth:800,margin:"0 auto",padding:"40px clamp(20px,5vw,40px)"}}>
-        <iframe style={{borderRadius:12,width:"100%",border:"none"}}
-          src={getSpotifyEmbedUrl(episode)}
-          height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"/>
       </div>
 
       {/* Topics Discussed */}
