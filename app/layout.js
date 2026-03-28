@@ -1,4 +1,5 @@
 import './globals.css';
+import SubpageShell from './components/SubpageShell';
 
 export const metadata = {
   title: 'Trying Very Hard: The Podcast | Amanda & Monica',
@@ -27,7 +28,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SubpageShell>{children}</SubpageShell>
+      </body>
     </html>
   );
 }

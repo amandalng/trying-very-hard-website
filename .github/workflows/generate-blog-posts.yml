@@ -1,0 +1,70 @@
+# .github/workflows/generate-blog-posts.yml
+# Runs every Tuesday at 11pm SGT (3pm UTC) to:
+# 1. Fetch latest episodes from RSS + YouTube
+# 2. Generate blog posts from YouTube transcripts
+# 3. Commit cached content and trigger redeploy
+
+name: Generate Blog Posts
+
+on:
+  schedule:
+    # 3pm UTC = 11pm SGT every Tuesday
+    - cron: '0 15 * * 2'
+  
+  # Also run manually from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install transcript package
+        run: npm install youtube-transcript --save-dev
+
+      - name: Generate blog posts
+        env:
+          SPOTIFY_RSS_URL: ${{ secrets.SPOTIFY_RSS_URL }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_CHANNEL_HANDLE: TryingVeryHardPod
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-blog-posts.mjs
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add .blog-cache/
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No new blog posts generated"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "New blog posts detected"
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .blog-cache/
+          git commit -m "📝 Auto-generate blog posts for new episodes [$(date +'%Y-%m-%d')]"
+          git push
+
+      # If you're on Netlify, the push triggers a redeploy automatically.
+      # If you need to trigger manually, uncomment below and add NETLIFY_BUILD_HOOK secret:
+      # - name: Trigger Netlify deploy
+      #   if: steps.changes.outputs.has_changes == 'true'
+      #   run: curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK }}
