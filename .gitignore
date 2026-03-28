@@ -1,2 +1,5 @@
 node_modules/
 .blog-cache/
+.env
+.env.local
+fix-transcript.mjs
