@@ -133,9 +133,10 @@ export default function HomeClient({ episodes = [] }){
           .ftin{flex-direction:column!important;gap:32px!important;text-align:center!important;align-items:center!important}
           .csplit{flex-direction:column!important;gap:24px!important}
           .csplit>div:first-child{margin-bottom:0!important}
+          #contact{padding-top:48px!important;padding-bottom:48px!important}
           .ft-cols{flex-direction:column!important;gap:24px!important;text-align:center!important;align-items:center!important}
           .ft-cols>div{text-align:center!important}
-          .ft-cols>div:first-child{margin-bottom:0!important}
+          .ft-cols>div:first-child{flex:none!important;margin-bottom:0!important}
           .ft-cols button{text-align:center!important}
           .sec-head{flex-direction:column!important;align-items:flex-start!important;gap:16px!important}
         }
