@@ -72,7 +72,7 @@ export default function HomeClient({ episodes = [] }){
           <span className="c" style={{display:"inline-block",padding:"4px 12px",borderRadius:20,fontSize:11,fontWeight:700,letterSpacing:"0.06em",textTransform:"uppercase",background:ep.type==="monanda"?"#F5ACC8":"#FFD200",color:"#1a1a1a"}}>{ep.type==="monanda"?"Monanda":ep.guest}</span>
         </div>
         <h3 className="c" style={{fontWeight:700,fontSize:"clamp(16px,2.2vw,24px)",lineHeight:1.25,textTransform:"uppercase",marginBottom:10}}>{ep.title}</h3>
-        <p className="c" style={{fontSize:14,lineHeight:1.6,color:"#777",marginBottom:20}}>{ep.description}</p>
+        <p className="c" style={{fontSize:14,lineHeight:1.6,color:"#777",marginBottom:20}}>{ep.description && ep.description.length > 300 ? ep.description.substring(0, 297) + "..." : ep.description}</p>
         <div className="ep-bottom" style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:16}}>
           <a href={ep.youtube} target="_blank" rel="noopener noreferrer" className="c" style={{display:"flex",alignItems:"center",gap:8,fontSize:13,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em",color:"#F5ACC8",textDecoration:"none"}}>Listen Now <Arr/></a>
           <PlatformIcons size={36} iconSize={16} links={{youtube:ep.youtube,spotify:ep.spotify,apple:ep.apple}}/>
@@ -303,6 +303,7 @@ export default function HomeClient({ episodes = [] }){
                       <option value="guest">I'd love to be a guest (or suggest someone!)</option>
                       <option value="sponsor">Sponsorship or brand partnership</option>
                       <option value="collab">Collaboration idea</option>
+                      <option value="topic">Topic idea (there's something I've been trying very hard at and want to feel less alone in!)</option>
                       <option value="media">Media or press inquiry</option>
                       <option value="other">Something else / just saying hi 👋</option>
                     </select>
@@ -323,7 +324,7 @@ export default function HomeClient({ episodes = [] }){
       <footer style={{background:"#1a1a1a",color:"#FFF0DD",padding:"clamp(48px,6vh,72px) clamp(24px,5vw,80px)"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div className="ft-cols" style={{display:"flex",justifyContent:"space-between",gap:48,marginBottom:40}}>
-            <div style={{flex:"1 1 300px"}}>
+            <div style={{flex:"0 1 300px"}}>
               <p className="c" style={{fontSize:14,lineHeight:1.7,opacity:0.5,maxWidth:320}}>A podcast about the effort behind the outcome — and why that effort matters.</p>
             </div>
             <div style={{flex:"0 0 auto"}}>
