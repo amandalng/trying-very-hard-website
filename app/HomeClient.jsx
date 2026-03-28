@@ -56,7 +56,7 @@ export default function HomeClient({ episodes = [] }){
   const go=(id)=>{setMenuOpen(false);document.getElementById(id)?.scrollIntoView({behavior:"smooth"})};
   const sub=async(e)=>{e.preventDefault();try{await fetch("https://formspree.io/f/xeepqpvr",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(form)});setSent(true);setTimeout(()=>setSent(false),4000);setForm({firstName:"",lastName:"",email:"",phone:"",company:"",website:"",type:"",message:""});}catch(err){alert("Something went wrong. Please try again!")}};
   const eps=episodes.slice(0,5);
-  const NAV=["subscribe","episodes","blog","about","contact"];
+  const NAV=["subscribe","episodes","about","contact"];
 
   // Episode card — 16:9 thumbnail with YouTube image or colored placeholder
   const EpCard=({ep,isLatest})=>(
@@ -156,7 +156,7 @@ export default function HomeClient({ episodes = [] }){
         <nav className="c" style={{padding:"14px clamp(24px,5vw,80px)"}}>
           <div style={{maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <div style={{cursor:"pointer"}} onClick={()=>go("home")}>
-              <img src="/images/nav-logo.png" alt="Trying Very Hard" style={{height:36,borderRadius:8}}/>
+              <img src="/images/nav-logo.png" alt="Trying Very Hard" style={{height:41,borderRadius:8}}/>
             </div>
             <div className="desk" style={{display:"flex",gap:32}}>
               {NAV.map(s=>(<button key={s} className="nl" onClick={()=>go(s)}>{s}</button>))}
@@ -189,7 +189,7 @@ export default function HomeClient({ episodes = [] }){
           <p className="c" style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",color:"#F5ACC8",marginBottom:6}}>Listen & Follow</p>
           <h2 className="c" style={{fontWeight:700,fontSize:"clamp(24px,3.5vw,40px)",textTransform:"uppercase",marginBottom:12,color:"#FFF0DD"}}>Subscribe Now on Your Favorite Platform</h2>
           <p className="c" style={{fontSize:14,color:"rgba(255,240,221,0.5)",marginBottom:36}}>Never miss an episode. New conversations every Tuesday.</p>
-          <PlatformIcons size={56} iconSize={24} links={LK} dark={true}/>
+          <PlatformIcons size={44} iconSize={20} links={LK} dark={true}/>
         </div>
       </section>
 
@@ -201,7 +201,7 @@ export default function HomeClient({ episodes = [] }){
               <SectionLabel>Latest Episodes</SectionLabel>
               <h2 className="c" style={{fontWeight:700,fontSize:"clamp(28px,4vw,44px)",lineHeight:1.1,textTransform:"uppercase"}}>Come Sit With Us</h2>
             </div>
-            <a href="/episodes" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Episodes <Arr/></a>
+            <a href={LK.youtube} target="_blank" rel="noopener noreferrer" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>Watch on YouTube <Arr/></a>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             {eps.map((ep,i)=>(<EpCard key={ep.id} ep={ep} isLatest={i===0}/>))}
@@ -215,39 +215,6 @@ export default function HomeClient({ episodes = [] }){
           <p className="c" style={{fontSize:"clamp(18px,2.5vw,26px)",fontWeight:700,textTransform:"uppercase",color:"#FFF0DD",marginBottom:20}}>Like what you hear?</p>
           <PlatformIcons size={44} iconSize={20} links={LK} dark={true}/>
           <p className="c" style={{fontSize:13,color:"rgba(255,240,221,0.4)",marginTop:14}}>Follow us wherever you listen.</p>
-        </div>
-      </section>
-
-      {/* 4. BLOG (#5 fix: CTA matches episode style) */}
-      <section id="blog" style={{background:"#FFF0DD",padding:"clamp(72px,10vh,120px) clamp(24px,5vw,80px)"}}>
-        <div style={{maxWidth:1200,margin:"0 auto"}}>
-          <div className="sec-head" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:40,flexWrap:"wrap",gap:12}}>
-            <div>
-              <SectionLabel>The TVH Journal</SectionLabel>
-              <h2 className="c" style={{fontWeight:700,fontSize:"clamp(28px,4vw,44px)",lineHeight:1.1,textTransform:"uppercase"}}>Episode Recaps & Reflections</h2>
-            </div>
-            <a href="/blog" className="cap cap-b" style={{fontSize:12,padding:"10px 24px"}}>All Posts <Arr/></a>
-          </div>
-          <div className="blog-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20}}>
-            {eps.slice(0,3).map(ep=>(
-              <a key={ep.id} href={`/blog/${ep.title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/-$/,"")}`} style={{textDecoration:"none",color:"inherit",display:"block"}}>
-                <div style={{background:"#fff",borderRadius:20,overflow:"hidden",transition:"all 0.3s"}}
-                  onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 40px rgba(0,0,0,0.06)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>
-                  <div style={{height:6,background:ep.type==="monanda"?"#F5ACC8":"#FFD200"}}/>
-                  <div style={{padding:"24px 28px"}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-                      <span className="c" style={{display:"inline-block",padding:"3px 10px",borderRadius:16,fontSize:10,fontWeight:700,letterSpacing:"0.06em",textTransform:"uppercase",background:ep.type==="monanda"?"#F5ACC8":"#FFD200",color:"#1a1a1a"}}>{ep.type==="monanda"?"Monanda":ep.guest}</span>
-                      <span className="c" style={{fontSize:11,color:"#bbb",fontWeight:700,marginLeft:"auto"}}>{ep.date}</span>
-                    </div>
-                    <h3 className="c" style={{fontWeight:700,fontSize:17,lineHeight:1.4,marginBottom:10}}>{ep.blogTitle}</h3>
-                    <p className="c" style={{fontSize:13,lineHeight:1.55,color:"#888",display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden",wordWrap:"break-word",overflowWrap:"break-word"}}>{ep.description}</p>
-                    <p className="c" style={{fontSize:12,fontWeight:700,color:"#F5ACC8",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:16,display:"flex",alignItems:"center",gap:6}}>Read More <Arr/></p>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -357,9 +324,6 @@ export default function HomeClient({ episodes = [] }){
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div className="ft-cols" style={{display:"flex",justifyContent:"space-between",gap:48,marginBottom:40}}>
             <div style={{flex:"1 1 300px"}}>
-              <div style={{marginBottom:12}}>
-                <img src="/images/footer-logo.png" alt="Trying Very Hard" style={{height:48}}/>
-              </div>
               <p className="c" style={{fontSize:14,lineHeight:1.7,opacity:0.5,maxWidth:320}}>A podcast about the effort behind the outcome — and why that effort matters.</p>
             </div>
             <div style={{flex:"0 0 auto"}}>
@@ -375,7 +339,7 @@ export default function HomeClient({ episodes = [] }){
               <p className="c" style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",opacity:0.3,marginBottom:12}}>Listen</p>
               <div style={{display:"flex",flexDirection:"column",gap:8}}>
                 {[{n:"YouTube",u:LK.youtube},{n:"Spotify",u:LK.spotify},{n:"Apple Podcasts",u:LK.apple}].map(p=>(
-                  <a key={p.n} href={p.u} target="_blank" rel="noopener noreferrer" className="c" style={{color:"#FFF0DD",opacity:0.6,fontSize:14,fontWeight:700,textDecoration:"none",transition:"opacity 0.2s"}}
+                  <a key={p.n} href={p.u} target="_blank" rel="noopener noreferrer" className="c" style={{color:"#FFF0DD",opacity:0.6,fontSize:14,fontWeight:700,textDecoration:"none",textTransform:"uppercase",letterSpacing:"0.06em",transition:"opacity 0.2s"}}
                   onMouseEnter={e=>e.currentTarget.style.opacity="1"} onMouseLeave={e=>e.currentTarget.style.opacity="0.6"}>{p.n}</a>
                 ))}
               </div>
