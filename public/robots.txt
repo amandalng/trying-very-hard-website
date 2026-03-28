@@ -1,0 +1,7 @@
+# Trying Very Hard: The Podcast
+# https://tryingveryhard.com
+
+User-agent: *
+Allow: /
+
+Sitemap: https://tryingveryhard.com/sitemap.xml
