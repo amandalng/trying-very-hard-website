@@ -124,16 +124,18 @@ export default function HomeClient({ episodes = [] }){
           .ep-thumb{width:100%!important}
           .ep-row h3{font-size:16px!important;word-wrap:break-word!important;overflow-wrap:break-word!important}
           .ep-row p{font-size:13px!important;word-wrap:break-word!important;overflow-wrap:break-word!important}
-          .ep-bottom{flex-direction:column!important;align-items:flex-start!important;gap:12px!important}
+          .ep-bottom{flex-direction:row!important;align-items:center!important;gap:12px!important}
           .blog-grid{grid-template-columns:1fr!important;padding:0!important}
           .blog-grid>a{margin:0!important}
           .blog-grid>a>div{margin:0 0!important}
           .hg{grid-template-columns:1fr!important}
           .frow{flex-direction:column!important}
           .ftin{flex-direction:column!important;gap:32px!important;text-align:center!important;align-items:center!important}
-          .csplit{flex-direction:column!important}
-          .ft-cols{flex-direction:column!important;gap:32px!important;text-align:center!important;align-items:center!important}
+          .csplit{flex-direction:column!important;gap:24px!important}
+          .csplit>div:first-child{margin-bottom:0!important}
+          .ft-cols{flex-direction:column!important;gap:24px!important;text-align:center!important;align-items:center!important}
           .ft-cols>div{text-align:center!important}
+          .ft-cols>div:first-child{margin-bottom:0!important}
           .ft-cols button{text-align:center!important}
           .sec-head{flex-direction:column!important;align-items:flex-start!important;gap:16px!important}
         }
@@ -249,9 +251,9 @@ export default function HomeClient({ episodes = [] }){
       </section>
 
       {/* 6. CONTACT */}
-      <section id="contact" style={{background:"#FFF0DD",padding:"clamp(72px,10vh,120px) clamp(24px,5vw,80px)"}}>
+      <section id="contact" style={{background:"#FFF0DD",padding:"clamp(48px,8vh,120px) clamp(24px,5vw,80px)"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
-          <div className="csplit" style={{display:"flex",gap:"clamp(32px,4vw,64px)",flexWrap:"wrap",alignItems:"flex-start"}}>
+          <div className="csplit" style={{display:"flex",gap:"clamp(24px,4vw,64px)",flexWrap:"wrap",alignItems:"flex-start"}}>
             <div style={{flex:"1 1 280px"}}>
               <SectionLabel>Get In Touch</SectionLabel>
               <h2 className="c" style={{fontWeight:700,fontSize:"clamp(26px,3.5vw,40px)",lineHeight:1.1,textTransform:"uppercase",marginBottom:16}}>Want to Collaborate, Be a Sponsor, or Just Say Hi?</h2>
